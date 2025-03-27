@@ -20,7 +20,7 @@ export default function Home() {
   const sectionRefs = useRef([]);
 
   useEffect(() => {
-    console.log({activeSection});
+    console.log({ activeSection });
   }, [activeSection]);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.6 } // Adjust threshold as needed for accuracy
+      { threshold: 0.9 } // Adjust threshold as needed for accuracy
     );
 
     // Observe all sections
@@ -51,9 +51,7 @@ export default function Home() {
     const targetId = event.target.getAttribute("href").substring(1); // Get the section ID
 
     const targetElement = document.getElementById(targetId);
-    if (targetId === "about-me//") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else if (targetElement) {
+    if (targetElement) {
       targetElement.scrollIntoView({ behavior: "smooth" }); // Smooth scrolling
     }
   };
@@ -87,8 +85,19 @@ export default function Home() {
     };
   }, []);
 
+  const displayHeaderText = () => {
+    if (activeSection === "about-me") {
+      return "About Me";
+    } else if (activeSection === "experience") {
+      return "Experience";
+    } else if (activeSection === "projects") {
+      return "Projects";
+    }
+  };
+  // D3D3D3
+  // try color for text
   return (
-    <div className="font-[family-name:var(--font-dm-sans)] min-h-sceen overflow-y-scroll bg-[#090f3f] text-[#e2e9f1]">
+    <div className="font-[family-name:var(--font-dm-sans)] min-h-screen h-full overflow-visible sm:overflow-auto bg-[#090f3f] text-[#fffff]">
       <div
         ref={$follower}
         className="pointer-events-none hidden sm:fixed left-0 top-0 aspect-square w-[40vmin] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full will-change-transform"
@@ -101,12 +110,12 @@ export default function Home() {
           </div> */}
         </div>
       </div>
-      {/* <div className="sticky top-0 z-50 shadow-md">
+      <div className="pointer-events-none sticky sm:relative sm:hidden top-0 z-30 shadow-md bg-[#090f3f]">
         <h1 className="text-xl font-bold text-center p-4">
-          Current Section: {activeSection || "None"}
+          {displayHeaderText()}
         </h1>
-      </div> */}
-      <main className="flex h-screen flex-col sm:flex sm:flex-row sm:gap-[32px] items-start px-8 py-16 sm:px-32 sm:py-24">
+      </div>
+      <main className="flex h-full sm:h-screen flex-col sm:flex sm:flex-row sm:gap-[32px] items-start px-8 py-16 sm:px-32 sm:py-24">
         {/* Fixed Side */}
         <div className="static w-full h-full pointer-events-none sm:px-32 sm:w-2/5 sm:h-full sm:fixed">
           <div className="flex flex-col items-start justify-center gap-1">
@@ -162,7 +171,7 @@ export default function Home() {
             className="space-y-8"
             id="about-me"
           >
-            <h1 className="text-xl sm:text-4xl">About Me</h1>
+            {/* <h1 className="text-xl sm:text-4xl">About Me</h1> */}
             <p>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga
               eveniet mollitia praesentium repudiandae dolores quae harum atque
