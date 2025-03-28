@@ -16,7 +16,7 @@ export default function Home() {
   const experienceRef = useRef(null);
   const projectsRef = useRef(null);
 
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState<string | null>("");
   const sectionRefs = useRef([]);
 
   useEffect(() => {
@@ -26,11 +26,18 @@ export default function Home() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.getAttribute("id"));
+        entries.forEach(
+          (entry: {
+            isIntersecting: boolean;
+            target: {
+              getAttribute: (arg0: string) => string | null;
+            };
+          }) => {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.getAttribute("id"));
+            }
           }
-        });
+        );
       },
       { threshold: 0.9 } // Adjust threshold as needed for accuracy
     );
@@ -53,6 +60,7 @@ export default function Home() {
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: "smooth" }); // Smooth scrolling
+      setActiveSection(targetId);
     }
   };
 
@@ -127,28 +135,35 @@ export default function Home() {
             </h2>
             <div className="w-[80%] pt-5 sm:pt-0">
               <h3 className="text-sm font-semibold sm:text-base">
-                I develop highly accessible and pixel perfect applications for
-                mobile and the web.
+                I develop responsive, highly accessible, and pixel perfect
+                applications for mobile and the web.
               </h3>
             </div>
           </div>
           <div className="flex-col items-start justify-start hidden py-20 text-base font-semibold pointer-events-auto sm:flex gap-y-2">
+            {/* <div className="w-32 h-1 bg-gray-400 transition-all duration-300 hover:w-full"></div> */}
             <Link
-              className="duration-500 hover:text-2xl"
+              className={`duration-500 hover:text-4xl ${
+                activeSection === "about-me" ? "text-3xl" : ""
+              }`}
               href="#about-me"
               onClick={handleScroll}
             >
               About Me
             </Link>
             <Link
-              className="duration-500 hover:text-2xl"
+              className={`duration-500 hover:text-4xl ${
+                activeSection === "experience" ? "text-3xl" : ""
+              }`}
               href="#experience"
               onClick={handleScroll}
             >
               Experience
             </Link>
             <Link
-              className="duration-500 hover:text-2xl"
+              className={`duration-500 hover:text-4xl ${
+                activeSection === "projects" ? "text-3xl" : ""
+              }`}
               href="#projects"
               onClick={handleScroll}
             >
@@ -173,40 +188,19 @@ export default function Home() {
           >
             {/* <h1 className="text-xl sm:text-4xl">About Me</h1> */}
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga
-              eveniet mollitia praesentium repudiandae dolores quae harum atque
-              veritatis pariatur voluptatibus autem, nesciunt, enim nemo
-              laudantium voluptatum, illum et totam magni?
+              {
+                "I am a dedicated developer with a passion for crafting accessible, responsive, and visually flawless web and mobile applications. My focus lies in creating user-friendly experiences that seamlessly adapt to diverse devices and ensure inclusivity for all users. I take pride in delivering pixel-perfect designs and robust functionality, blending technical precision with creative ingenuity to meet both client and end-user expectations. By prioritizing performance, accessibility, and aesthetics, I strive to make technology more intuitive, engaging, and impactful."
+              }
             </p>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-              ipsa nobis sed hic magni quos, doloremque unde quia qui? Omnis
-              cupiditate sapiente corrupti necessitatibus ea perferendis, earum
-              quas alias consectetur?
+              {
+                "I am currently pursuing opportunities in Mobile and Front-end Development, specializing in React Native and React. My expertise lies in designing, developing, and maintaining intuitive UI components that adhere to industry best practices and standards. I am committed to delivering seamless, high-quality user experiences by prioritizing accessibility, responsiveness, and attention to detail in every project I undertake."
+              }
             </p>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga
-              eveniet mollitia praesentium repudiandae dolores quae harum atque
-              veritatis pariatur voluptatibus autem, nesciunt, enim nemo
-              laudantium voluptatum, illum et totam magni?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-              ipsa nobis sed hic magni quos, doloremque unde quia qui? Omnis
-              cupiditate sapiente corrupti necessitatibus ea perferendis, earum
-              quas alias consectetur?
-            </p>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga
-              eveniet mollitia praesentium repudiandae dolores quae harum atque
-              veritatis pariatur voluptatibus autem, nesciunt, enim nemo
-              laudantium voluptatum, illum et totam magni?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-              ipsa nobis sed hic magni quos, doloremque unde quia qui? Omnis
-              cupiditate sapiente corrupti necessitatibus ea perferendis, earum
-              quas alias consectetur?
+              {
+                "Throughout my career, I've had the privilege of developing mobile applications for a wide range of purposes, including E-Commerce platforms and Mobile Banking solutions. As a dedicated member of the delivery teams in my previous roles, I consistently ensured that my work met the highest standards, delivering top-quality results to guarantee client satisfaction."
+              }
             </p>
           </section>
           <section
